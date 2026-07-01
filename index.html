@@ -1156,18 +1156,15 @@
     }
 
     // Audio playlist setup
-    const playlist = [
-      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-    ];
-    let currentTrack = 0;
+    const musicSrc = "GONE GONE , THANK YOU.mp3";
+    const startTime = 278; // 4 minutes 38 seconds
 
     function toggleMusic() {
       const audio = document.getElementById('bg-music');
       const btn = document.getElementById('music-toggle-btn');
-      if (!audio.src) {
-        audio.src = playlist[currentTrack];
+      if (!audio.src || audio.src.indexOf(encodeURIComponent(musicSrc)) === -1) {
+        audio.src = musicSrc;
+        audio.currentTime = startTime;
       }
       
       if (audio.paused) {
@@ -1182,15 +1179,11 @@
       }
     }
 
-    // Move to next track when finished
+    // Restart at 4:38 when finished
     document.getElementById('bg-music').addEventListener('ended', () => {
       const audio = document.getElementById('bg-music');
-      const btn = document.getElementById('music-toggle-btn');
-      currentTrack = (currentTrack + 1) % playlist.length;
-      audio.src = playlist[currentTrack];
-      audio.play().then(() => {
-        btn.innerText = '🔇 Mute Music';
-      });
+      audio.currentTime = startTime;
+      audio.play();
     });
 
     // Auto play on first click/scroll interaction anywhere
@@ -1201,7 +1194,8 @@
         const audio = document.getElementById('bg-music');
         const btn = document.getElementById('music-toggle-btn');
         if (audio.paused) {
-          audio.src = playlist[currentTrack];
+          audio.src = musicSrc;
+          audio.currentTime = startTime;
           audio.play().then(() => {
             btn.innerText = '🔇 Mute Music';
           }).catch(e => console.log('Autoplay deferred:', e));
