@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You for Your Purchase — FÕCL MEDIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg viewBox="0 0 12 12"><rect width="12" height="12"/></svg>
+      FÕCL
+    </a>
+    <select id="lang-select" class="lang-selector">
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Português</option>
+      <option value="nl">Nederlands</option>
+    </select>
+  </nav>
+
+  <!-- ══ HERO HEADER ══ -->
+  <header class="header-hero">
+    <h1 id="page-title">Thank You for Your Purchase</h1>
+    <p id="page-subtitle">Your digital product delivery dashboard</p>
+  </header>
+
+  <!-- ══ MAIN LAYOUT ══ -->
+  <main class="container">
+    
+    <!-- ══ WATCH FIRST CARD ══ -->
+    <section class="premium-card">
+      <span class="card-label" id="watch-first-label">WATCH FIRST</span>
+      <h2 class="card-title" id="watch-first-title">Thank You for Your Purchase</h2>
+      <p class="card-desc" id="watch-first-desc" style="margin-bottom: 24px;">
+        Please watch this short walkthrough video to understand how to correctly set up and optimize your new LUTs.
+      </p>
+
+      <div class="video-container">
+        <video controls playsinline>
+          <source src="Design sem nome.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <!-- ══ INSTRUCTION GUIDE CARD ══ -->
+    <section class="premium-card">
+      <span class="card-label" id="guide-label">COLOUR GRADING GUIDE</span>
+      <h2 class="card-title" id="guide-subtitle">How to Apply a LUT in Final Cut Pro</h2>
+      <p class="card-desc" id="guide-desc">
+        A seven-step walkthrough for loading your FOCL Media LUTs and creating a clean, cinematic grade.
+      </p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <p class="step-num" id="step-1-title">Step 1</p>
+          <p class="step-text" id="step-1-desc">Select the clip (or adjustment layer) you want to colour grade.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-2-title">Step 2</p>
+          <p class="step-text" id="step-2-desc">Open the Effects Browser (bottom right of the screen) and search for Custom LUT.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-3-title">Step 3</p>
+          <p class="step-text" id="step-3-desc">Drag and drop Custom LUT onto your selected clip or adjustment layer.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-4-title">Step 4</p>
+          <p class="step-text" id="step-4-desc">Open the Inspector (top right), then under Custom LUT click Choose Custom LUT.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-5-title">Step 5</p>
+          <p class="step-text" id="step-5-desc">Locate your downloaded LUT folder and import it.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-6-title">Step 6</p>
+          <p class="step-text" id="step-6-desc">Your LUTs will now appear inside the Custom LUT dropdown menu. Choose the LUT you would like to use.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num" id="step-7-title">Step 7</p>
+          <p class="step-text" id="step-7-desc">Adjust exposure, contrast and white balance to achieve the best possible cinematic look.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TUTORIAL CARD ══ -->
+    <section class="premium-card">
+      <span class="card-label" id="tutorial-label">COLOUR GRADING TUTORIAL</span>
+      <h2 class="card-title" id="tutorial-subtitle">Watch the Full Walkthrough</h2>
+      <p class="card-desc" id="tutorial-desc" style="margin-bottom: 0;">
+        For a complete walkthrough showing exactly how we apply and fine-tune our LUTs, watch the tutorial above. It explains how to correctly adjust exposure, white balance and contrast to achieve the best results from every LUT.
+      </p>
+    </section>
+
+    <!-- ══ DOWNLOADS CARD ══ -->
+    <section class="premium-card">
+      <span class="card-label" id="download-title">YOUR DOWNLOADS</span>
+      <p class="card-desc" id="download-subtitle" style="margin-bottom: 30px;">Access your files instantly</p>
+      
+      <div class="download-grid" id="download-grid">
+        <!-- Rendered dynamically via script.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo" id="footer-logo">FÕCL MEDIA</div>
+  </footer>
+
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
