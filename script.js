@@ -50,7 +50,7 @@ function updateLanguage(lang) {
   document.getElementById('download-subtitle').innerText = t.downloadSubtitle;
 
   // Download buttons
-  document.querySelectorAll('.download-btn').forEach(btn => {
+  document.querySelectorAll('.download-card .download-btn').forEach(btn => {
     btn.innerText = t.downloadBtn;
   });
 
