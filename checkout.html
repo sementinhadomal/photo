@@ -385,57 +385,19 @@
   </main>
 
   <script>
-    // Injects client-side configuration dynamically
     const STRIPE_PUBLISHABLE_KEY = "pk_live_51SKAqi9DRNAIhyucPtCNXP06uN5Q84xq3tndRVhBuNnQrHIboKYuYSF9o6WCzEGSiFxIHBrMfvtVsNEVJFfHBm0c00Pmvf0fsI";
     const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
-    // Style elements matching FOCL dark theme
-    const style = {
-      base: {
-        color: '#ffffff',
-        fontFamily: 'Barlow, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '14px',
-        '::placeholder': {
-          color: 'rgba(255, 255, 255, 0.35)'
-        }
-      },
-      invalid: {
-        color: '#ff4d4d',
-        iconColor: '#ff4d4d'
-      }
-    };
-
-    const elements = stripe.elements();
-    const cardElement = elements.create('card', { style, hidePostalCode: true });
-    
-    // Mount Elements card inputs
-    cardElement.mount('#card-element-mount');
-
-    // Visual focus states binding
-    const container = document.getElementById('card-element-mount');
-    cardElement.on('focus', () => container.classList.add('focus'));
-    cardElement.on('blur', () => container.classList.remove('focus'));
-
-    // Handle form submit
+    let elements;
+    let paymentElement;
     const form = document.getElementById('payment-form');
     const submitBtn = document.getElementById('submit-button');
     const btnSpinner = document.getElementById('btn-spinner');
     const btnText = document.getElementById('btn-text');
     const errorDiv = document.getElementById('error-message');
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      
-      // Toggle button states / loaders
-      submitBtn.disabled = true;
-      btnSpinner.style.display = 'block';
-      btnText.innerText = 'Processing...';
-      errorDiv.style.display = 'none';
-
-      const email = document.getElementById('card-holder-email').value;
-      const name = document.getElementById('card-holder-name').value;
-
+    // Retrieve Payment Intent Client Secret as soon as the page loads
+    async function initializePayment() {
       // Extract UTM params from URL to pass to payment metadata
       const urlParams = new URLSearchParams(window.location.search);
       const utmParams = {
@@ -449,36 +411,65 @@
       };
 
       try {
-        // Get clientSecret from local/production server
         const response = await fetch('/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: 4900, currency: 'usd', email, name, utmParams })
+          body: JSON.stringify({ amount: 4900, currency: 'usd', utmParams })
         });
+        const { clientSecret } = await response.json();
 
-        const data = await response.json();
-        
-        if (data.error) {
-          throw new Error(data.error);
-        }
+        // Modern unified appearance setup
+        const appearance = {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#4caf50',
+            colorBackground: '#111111',
+            colorText: '#ffffff',
+            colorDanger: '#ff4d4d',
+            fontFamily: 'Barlow, sans-serif',
+            borderRadius: '4px'
+          }
+        };
 
-        // Confirm Card Payment
-        const result = await stripe.confirmCardPayment(data.clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: { name, email }
+        elements = stripe.elements({ clientSecret, appearance });
+        paymentElement = elements.create('payment');
+        paymentElement.mount('#card-element-mount');
+      } catch (err) {
+        errorDiv.innerText = "Error initializing payment: " + err.message;
+        errorDiv.style.display = 'block';
+      }
+    }
+
+    initializePayment();
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      submitBtn.disabled = true;
+      btnSpinner.style.display = 'block';
+      btnText.innerText = 'Processing...';
+      errorDiv.style.display = 'none';
+
+      const email = document.getElementById('card-holder-email').value;
+      const name = document.getElementById('card-holder-name').value;
+      const trackingQuery = window.location.search;
+
+      try {
+        const { error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: "https://www.focldownloads.online" + (trackingQuery ? trackingQuery : ""),
+            receipt_email: email,
+            shipping: {
+              name: name,
+              address: { country: 'US', line1: 'Digital Delivery' }
+            }
           }
         });
 
-        if (result.error) {
-          throw new Error(result.error.message);
-        } else if (result.paymentIntent.status === 'succeeded') {
-          // UTMify / Analytics conversion triggers can be configured here
-          console.log("Payment completed successfully!");
-          
-          // Redirect to the camouflaged downloads domain with parameters
-          const trackingQuery = window.location.search;
-          window.location.href = "https://www.focldownloads.online" + (trackingQuery ? trackingQuery : "");
+        // This will only run if there is an immediate error confirming payment
+        if (error) {
+          throw new Error(error.message);
         }
       } catch (err) {
         errorDiv.innerText = err.message;
