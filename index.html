@@ -875,67 +875,80 @@
       cinematic look, each LUT is designed to give you a professional starting point in seconds.
     </p>
     <div style="margin-bottom: 24px; display: flex; justify-content: center; gap: 10px;">
-      <a href="#buy" class="btn-outline-green" style="border-radius: 4px; padding: 12px 24px; font-weight: 600; border-color: var(--green-label); background: rgba(76,175,80,0.1);"><span style="display:inline-block; margin-right:8px; font-size:10px;">📹</span> SONY S-LOG3 LUTS</a>
-      <a href="#buy" class="btn-outline-green" style="border-radius: 4px; padding: 12px 24px; font-weight: 600; opacity: 0.6;"><span style="display:inline-block; margin-right:8px; font-size:10px;">🛸</span> DJI D-LOG M LUT</a>
+      <button onclick="switchTab('sony')" id="tab-sony" class="btn-outline-green" style="border-radius: 4px; padding: 12px 24px; font-weight: 600; border-color: var(--green-label); background: rgba(76,175,80,0.1);"><span style="display:inline-block; margin-right:8px; font-size:10px;">📹</span> SONY S-LOG3 LUTS</button>
+      <button onclick="switchTab('dji')" id="tab-dji" class="btn-outline-green" style="border-radius: 4px; padding: 12px 24px; font-weight: 600; opacity: 0.6;"><span style="display:inline-block; margin-right:8px; font-size:10px;">🛸</span> DJI D-LOG M LUT</button>
     </div>
 
-    <div class="ba-grid">
-      <!-- Slider 1 -->
-      <div class="ba-slider" id="slider1">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1536326625962-f2bf93f95cb7?w=600&q=80&auto=format&fit=crop" alt="After" style="filter: saturate(1.2) contrast(1.1) brightness(0.95);">
-        <img class="ba-before" src="https://images.unsplash.com/photo-1536326625962-f2bf93f95cb7?w=600&q=80&auto=format&fit=crop" alt="Before" id="before1" style="filter: saturate(0.5) contrast(0.95) brightness(1.05); clip-path: inset(0 50% 0 0);">
-        <div class="ba-line" id="line1"></div>
-        <div class="ba-handle" id="handle1">⬌</div>
-        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
-        <span class="ba-label-before">BEFORE</span>
-        <span class="ba-label-after" style="background: #000; color: #4caf50;">VINTAGE GREEN</span>
+    <!-- SONY LUTS CONTAINER -->
+    <div id="container-sony">
+      <div class="ba-grid">
+        <!-- Slider 1 -->
+        <div class="ba-slider" id="slider1">
+          <img class="ba-after" src="vintage_green_1.webp" alt="After">
+          <img class="ba-before" src="vintage_green_1_raw.webp" alt="Before" id="before1">
+          <div class="ba-line" id="line1"></div>
+          <div class="ba-handle" id="handle1">⬌</div>
+          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+          <span class="ba-label-before">BEFORE</span>
+          <span class="ba-label-after" style="background: #000; color: #4caf50;">VINTAGE GREEN</span>
+        </div>
+        <!-- Slider 2 -->
+        <div class="ba-slider" id="slider2">
+          <img class="ba-after" src="grade_teal_orange_1.webp" alt="After">
+          <img class="ba-before" src="grade_teal_oraange_1_raw.webp" alt="Before" id="before2">
+          <div class="ba-line" id="line2"></div>
+          <div class="ba-handle" id="handle2">⬌</div>
+          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+          <span class="ba-label-before">BEFORE</span>
+          <span class="ba-label-after" style="background: #000; color: #4caf50;">TEAL &amp; ORANGE</span>
+        </div>
+        <!-- Slider 3 -->
+        <div class="ba-slider" id="slider3">
+          <img class="ba-after" src="grade_sunset_1.webp" alt="After">
+          <img class="ba-before" src="grade_sunset_1_raw.webp" alt="Before" id="before3">
+          <div class="ba-line" id="line3"></div>
+          <div class="ba-handle" id="handle3">⬌</div>
+          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+          <span class="ba-label-before">BEFORE</span>
+          <span class="ba-label-after" style="background: #000; color: #4caf50;">SUNSET</span>
+        </div>
+        <!-- Slider 4 -->
+        <div class="ba-slider" id="slider4">
+          <img class="ba-after" src="grade_basic_1.webp" alt="After">
+          <img class="ba-before" src="grade_basic_1_raw.webp" alt="Before" id="before4">
+          <div class="ba-line" id="line4"></div>
+          <div class="ba-handle" id="handle4">⬌</div>
+          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+          <span class="ba-label-before">BEFORE</span>
+          <span class="ba-label-after" style="background: #000; color: #4caf50;">BASIC GRADE</span>
+        </div>
       </div>
-      <!-- Slider 2 -->
-      <div class="ba-slider" id="slider2">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&q=80&auto=format&fit=crop" alt="After" style="filter: saturate(1.15) contrast(1.1) brightness(0.95);">
-        <img class="ba-before" src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&q=80&auto=format&fit=crop" alt="Before" id="before2" style="filter: saturate(0.5) contrast(0.95) brightness(1.05); clip-path: inset(0 50% 0 0);">
-        <div class="ba-line" id="line2"></div>
-        <div class="ba-handle" id="handle2">⬌</div>
-        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
-        <span class="ba-label-before">BEFORE</span>
-        <span class="ba-label-after" style="background: #000; color: #4caf50;">TEAL &amp; ORANGE</span>
-      </div>
-      <!-- Slider 3 -->
-      <div class="ba-slider" id="slider3">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80&auto=format&fit=crop" alt="After" style="filter: saturate(1.3) contrast(1.15) hue-rotate(-5deg);">
-        <img class="ba-before" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80&auto=format&fit=crop" alt="Before" id="before3" style="filter: saturate(0.4) contrast(0.9) brightness(1.1); clip-path: inset(0 50% 0 0);">
-        <div class="ba-line" id="line3"></div>
-        <div class="ba-handle" id="handle3">⬌</div>
-        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
-        <span class="ba-label-before">BEFORE</span>
-        <span class="ba-label-after" style="background: #000; color: #4caf50;">SUNSET</span>
-      </div>
-      <!-- Slider 4 -->
-      <div class="ba-slider" id="slider4">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop" alt="After" style="filter: saturate(1.1) contrast(1.1) brightness(0.95);">
-        <img class="ba-before" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop" alt="Before" id="before4" style="filter: saturate(0.4) contrast(0.95) brightness(1.05); clip-path: inset(0 50% 0 0);">
-        <div class="ba-line" id="line4"></div>
-        <div class="ba-handle" id="handle4">⬌</div>
-        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
-        <span class="ba-label-before">BEFORE</span>
-        <span class="ba-label-after" style="background: #000; color: #4caf50;">BASIC GRADE</span>
+
+      <!-- Single centered slider for Sony -->
+      <div class="ba-grid-bottom">
+        <div class="ba-slider" id="slider5">
+          <img class="ba-after" src="grade_teal_orange_1.webp" alt="After">
+          <img class="ba-before" src="grade_teal_oraange_1_raw.webp" alt="Before" id="before5">
+          <div class="ba-line" id="line5"></div>
+          <div class="ba-handle" id="handle5">⬌</div>
+          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+          <span class="ba-label-before">BEFORE</span>
+          <span class="ba-label-after" style="background: #000; color: #4caf50;">COASTAL</span>
+        </div>
       </div>
     </div>
 
-    <!-- Single centered slider -->
-    <div class="ba-grid-bottom">
-      <div class="ba-slider" id="slider5">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80&auto=format&fit=crop" alt="After" style="filter: saturate(1.2) contrast(1.1) brightness(0.9);">
-        <img class="ba-before" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80&auto=format&fit=crop" alt="Before" id="before5" style="filter: saturate(0.5) contrast(0.95) brightness(1.05); clip-path: inset(0 50% 0 0);">
-        <div class="ba-line" id="line5"></div>
-        <div class="ba-handle" id="handle5">⬌</div>
-        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
+    <!-- DJI LUTS CONTAINER -->
+    <div id="container-dji" style="display: none; max-width: 680px; margin: 36px auto 28px;">
+      <div class="ba-slider" id="sliderDji" style="aspect-ratio: 16/9;">
+        <img class="ba-after" src="graded_done.webp" alt="After">
+        <img class="ba-before" src="graded_done_raw.webp" alt="Before" id="beforeDji">
+        <div class="ba-line" id="lineDji"></div>
+        <div class="ba-handle" id="handleDji">⬌</div>
+        <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">DJI D-LOG M</span>
         <span class="ba-label-before">BEFORE</span>
-        <span class="ba-label-after" style="background: #000; color: #4caf50;">COASTAL</span>
+        <span class="ba-label-after" style="background: #000; color: #4caf50;">GRADED DONE</span>
       </div>
-    </div>
-    <div style="margin-top: 24px; display: flex; justify-content: center; gap: 10px;">
-      <a href="#buy" class="btn-outline-green" style="border-radius: 4px; padding: 12px 24px; font-weight: 600; opacity: 0.6;"><span style="display:inline-block; margin-right:8px; font-size:10px;">🛸</span> DJI D-LOG M LUT</a>
     </div>
     <a href="#buy" class="btn-outline-green">▶&nbsp; What's In The LUT</a>
   </section>
@@ -1072,6 +1085,34 @@
     initSlider('slider3','before3','line3','handle3');
     initSlider('slider4','before4','line4','handle4');
     initSlider('slider5','before5','line5','handle5');
+    initSlider('sliderDji','beforeDji','lineDji','handleDji');
+
+    function switchTab(type) {
+      const btnSony = document.getElementById('tab-sony');
+      const btnDji = document.getElementById('tab-dji');
+      const cSony = document.getElementById('container-sony');
+      const cDji = document.getElementById('container-dji');
+
+      if (type === 'sony') {
+        cSony.style.display = 'block';
+        cDji.style.display = 'none';
+        btnSony.style.background = 'rgba(76,175,80,0.1)';
+        btnSony.style.borderColor = 'var(--green-label)';
+        btnSony.style.opacity = '1';
+        btnDji.style.background = 'transparent';
+        btnDji.style.borderColor = 'var(--green)';
+        btnDji.style.opacity = '0.6';
+      } else {
+        cSony.style.display = 'none';
+        cDji.style.display = 'block';
+        btnDji.style.background = 'rgba(76,175,80,0.1)';
+        btnDji.style.borderColor = 'var(--green-label)';
+        btnDji.style.opacity = '1';
+        btnSony.style.background = 'transparent';
+        btnSony.style.borderColor = 'var(--green)';
+        btnSony.style.opacity = '0.6';
+      }
+    }
 
     // Demo tabs
     document.querySelectorAll('.demo-tab').forEach(tab => {
