@@ -9,6 +9,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- UTMify / Pixel scripts -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  <script>
+    window.pixelId = "697185be2058fdd08c7d7436";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -806,6 +823,15 @@
       FÕCL
     </a>
     <div style="display: flex; align-items: center; gap: 15px;">
+      <select id="lang-select" onchange="changeLanguage(this.value)" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
+        <option value="nl">Nederlands</option>
+      </select>
       <button id="music-toggle-btn" onclick="toggleMusic()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-size: 11px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;">🎵 Play Music</button>
       <audio id="bg-music" style="display:none;"></audio>
     </div>
@@ -1176,6 +1202,18 @@
         }
       }
     }, { once: true });
+
+    function changeLanguage(lang) {
+      localStorage.setItem('selectedLanguage', lang);
+      const urlParams = new URLSearchParams(window.location.search);
+      // If we need to sync with other page or trigger changes later:
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+      const select = document.getElementById('lang-select');
+      if (select) select.value = savedLang;
+    });
 
     // Demo tabs
     document.querySelectorAll('.demo-tab').forEach(tab => {
