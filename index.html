@@ -805,12 +805,7 @@
       <svg viewBox="0 0 12 12"><rect width="12" height="12"/></svg>
       FÕCL
     </a>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <button id="music-toggle-btn" onclick="toggleMusic()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-size: 11px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;">🎵 Play Music</button>
-      <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
-      </audio>
-    </div>
+    <audio id="bg-music" style="display:none;"></audio>
     <span class="nav-center"><b>$49 USD</b> &nbsp;One-time</span>
     <a href="#buy" class="nav-cta">Get The Pack</a>
   </nav>
@@ -1125,29 +1120,37 @@
       element.style.borderColor = 'var(--green-label)';
     }
 
-    function toggleMusic() {
+    // Audio playlist setup
+    const playlist = [
+      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    ];
+    let currentTrack = 0;
+    let audioStarted = false;
+
+    function playTrack(index) {
       const audio = document.getElementById('bg-music');
-      const btn = document.getElementById('music-toggle-btn');
-      if (audio.paused) {
-        audio.play().then(() => {
-          btn.innerText = '🔇 Mute Music';
-        }).catch(err => {
-          console.log("Audio play blocked by browser. Click to interact.", err);
-        });
-      } else {
-        audio.pause();
-        btn.innerText = '🎵 Play Music';
-      }
+      audio.src = playlist[index];
+      audio.play().then(() => {
+        audioStarted = true;
+      }).catch(err => {
+        console.log("Autoplay blocked. Awaiting user interaction.", err);
+      });
     }
 
-    // Try playing on first interaction if blocked
+    // Move to next track when finished
+    document.getElementById('bg-music').addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      playTrack(currentTrack);
+    });
+
+    // Start playing on the first click on the document
     document.addEventListener('click', () => {
-      const audio = document.getElementById('bg-music');
-      const btn = document.getElementById('music-toggle-btn');
-      if (audio.paused && btn.innerText === '🎵 Play Music') {
-        // We do not force autoplay to avoid annoying the user, but we can let them trigger it via button
+      if (!audioStarted) {
+        playTrack(currentTrack);
       }
-    }, { once: true });
+    }, { once: false });
 
     // Demo tabs
     document.querySelectorAll('.demo-tab').forEach(tab => {
