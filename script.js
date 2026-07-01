@@ -1,5 +1,4 @@
 const filesData = [
-  { name: "LUT_Guide_and_Video_Tutorial.pdf", size: "106 KB" },
   { name: "CLEAN_GRADE_LUT.cube", size: "947 KB" },
   { name: "SUNSET_LUT.cube", size: "947 KB" },
   { name: "ALTITUDE_LUT.cube", size: "947 KB" },
