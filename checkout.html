@@ -416,7 +416,17 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: 4900, currency: 'usd', utmParams })
         });
-        const { clientSecret } = await response.json();
+        
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        const clientSecret = data.clientSecret;
+        if (!clientSecret) {
+          throw new Error("Client Secret was not returned by server. Make sure STRIPE_SECRET_KEY is configured in Vercel environment variables.");
+        }
 
         // Modern unified appearance setup
         const appearance = {
