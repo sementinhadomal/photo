@@ -804,7 +804,25 @@
 
     /* ─────────── RESPONSIVE ─────────── */
     @media (max-width: 768px) {
-      nav { padding: 0 20px; }
+      nav { 
+        padding: 0 8px; 
+        gap: 6px;
+      }
+      .nav-logo {
+        font-size: 15px;
+        gap: 3px;
+      }
+      .nav-logo svg {
+        width: 10px; height: 10px;
+      }
+      #lang-select {
+        padding: 4px 6px !important;
+        font-size: 10px !important;
+      }
+      .nav-cta {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+      }
       .nav-center { display: none; }
       .hero {
         height: auto;
@@ -819,8 +837,8 @@
       .demo-content { padding: 0 20px; }
       footer { padding: 24px 20px; }
       #music-toggle-btn {
-        padding: 6px 10px;
-        font-size: 14px; /* Big enough for the emoji */
+        padding: 4px 8px;
+        font-size: 12px;
       }
     }
   </style>
@@ -963,18 +981,6 @@
         </div>
       </div>
 
-      <!-- Single centered slider for Sony -->
-      <div class="ba-grid-bottom">
-        <div class="ba-slider" id="slider5">
-          <img class="ba-after" src="grade_teal_orange_1.webp" alt="After">
-          <img class="ba-before" src="grade_teal_oraange_1_raw.webp" alt="Before" id="before5">
-          <div class="ba-line" id="line5"></div>
-          <div class="ba-handle" id="handle5">⬌</div>
-          <span class="ba-label-before" style="position: absolute; top: 12px; left: 12px; bottom: auto; background: none; font-size: 11px; letter-spacing: 0.15em; font-weight: 500; opacity: 0.8;">SONY S-LOG3</span>
-          <span class="ba-label-before">BEFORE</span>
-          <span class="ba-label-after" style="background: #000; color: #4caf50;">COASTAL</span>
-        </div>
-      </div>
     </div>
 
     <!-- DJI LUTS CONTAINER -->
