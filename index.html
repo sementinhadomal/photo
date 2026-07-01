@@ -962,19 +962,18 @@
       <!-- Left: Product image -->
       <div>
         <div class="product-box">
-          <div class="product-box-inner">
-            <div class="box-label">Cinematic<br>LUT<br>Pack</div>
-            <div class="box-sub">FÕCL Media</div>
-          </div>
+          <img id="main-product-img" src="lut_pack.webp" alt="Cinematic LUT Pack" style="width: 100%; height: 100%; object-fit: contain; display: block; padding: 20px;">
         </div>
         <div class="product-thumbs">
-          <div class="product-thumb">
-            <div class="product-thumb-label">5 Cinematic<br>Looks</div>
+          <div class="product-thumb" onclick="changeProductImage('lut_pack.webp', this)" style="border: 1px solid var(--green-label);">
+            <img src="lut_pack.webp" alt="Pack Thumb" style="width:100%; height:100%; object-fit:cover;">
           </div>
-          <div class="product-thumb">
-            <div class="product-thumb-label">Colour Grading<br>Mini Course</div>
+          <div class="product-thumb" onclick="changeProductImage('2.webp', this)">
+            <img src="2.webp" alt="Thumb 2" style="width:100%; height:100%; object-fit:cover;">
           </div>
-          <div class="product-thumb" style="opacity:0.3;"></div>
+          <div class="product-thumb" onclick="changeProductImage('3.webp', this)">
+            <img src="3.webp" alt="Thumb 3" style="width:100%; height:100%; object-fit:cover;">
+          </div>
         </div>
       </div>
 
@@ -1112,6 +1111,14 @@
         btnSony.style.borderColor = 'var(--green)';
         btnSony.style.opacity = '0.6';
       }
+    }
+
+    function changeProductImage(src, element) {
+      document.getElementById('main-product-img').src = src;
+      document.querySelectorAll('.product-thumb').forEach(thumb => {
+        thumb.style.borderColor = 'rgba(255,255,255,0.08)';
+      });
+      element.style.borderColor = 'var(--green-label)';
     }
 
     // Demo tabs
