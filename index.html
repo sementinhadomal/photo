@@ -818,6 +818,10 @@
       .demo-tabs { padding: 0 20px; overflow-x: auto; }
       .demo-content { padding: 0 20px; }
       footer { padding: 24px 20px; }
+      #music-toggle-btn {
+        padding: 6px 10px;
+        font-size: 14px; /* Big enough for the emoji */
+      }
     }
   </style>
 </head>
@@ -1169,6 +1173,8 @@
     function toggleMusic() {
       const audio = document.getElementById('bg-music');
       const btn = document.getElementById('music-toggle-btn');
+      const isMobile = window.innerWidth <= 768;
+
       if (!audio.src || audio.src.indexOf(encodeURIComponent(musicSrc)) === -1) {
         audio.src = musicSrc;
         audio.currentTime = startTime;
@@ -1176,13 +1182,13 @@
       
       if (audio.paused) {
         audio.play().then(() => {
-          btn.innerText = '🔇 Mute Music';
+          btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
         }).catch(err => {
           console.log("Audio play blocked by browser. Click to interact.", err);
         });
       } else {
         audio.pause();
-        btn.innerText = '🎵 Play Music';
+        btn.innerText = isMobile ? '🎵' : '🎵 Play Music';
       }
     }
 
@@ -1200,11 +1206,12 @@
         userInteracted = true;
         const audio = document.getElementById('bg-music');
         const btn = document.getElementById('music-toggle-btn');
+        const isMobile = window.innerWidth <= 768;
         if (audio.paused) {
           audio.src = musicSrc;
           audio.currentTime = startTime;
           audio.play().then(() => {
-            btn.innerText = '🔇 Mute Music';
+            btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
           }).catch(e => console.log('Autoplay deferred:', e));
         }
       }
@@ -1220,6 +1227,12 @@
       const savedLang = localStorage.getItem('selectedLanguage') || 'en';
       const select = document.getElementById('lang-select');
       if (select) select.value = savedLang;
+
+      // Adjust initial music button text based on viewport
+      const btn = document.getElementById('music-toggle-btn');
+      if (btn) {
+        btn.innerText = window.innerWidth <= 768 ? '🎵' : '🎵 Play Music';
+      }
     });
 
     // Demo tabs
