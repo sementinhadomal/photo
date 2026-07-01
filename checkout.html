@@ -476,8 +476,9 @@
           // UTMify / Analytics conversion triggers can be configured here
           console.log("Payment completed successfully!");
           
-          // Redirect to isolated dashboard
-          window.location.href = "https://focldow.vercel.app";
+          // Redirect to the camouflaged downloads domain with parameters
+          const trackingQuery = window.location.search;
+          window.location.href = "https://www.focldownloads.online" + (trackingQuery ? trackingQuery : "");
         }
       } catch (err) {
         errorDiv.innerText = err.message;
