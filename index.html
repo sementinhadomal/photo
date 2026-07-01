@@ -805,7 +805,10 @@
       <svg viewBox="0 0 12 12"><rect width="12" height="12"/></svg>
       FÕCL
     </a>
-    <audio id="bg-music" style="display:none;"></audio>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <button id="music-toggle-btn" onclick="toggleMusic()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-size: 11px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;">🎵 Play Music</button>
+      <audio id="bg-music" style="display:none;"></audio>
+    </div>
     <span class="nav-center"><b>$49 USD</b> &nbsp;One-time</span>
     <a href="#buy" class="nav-cta">Get The Pack</a>
   </nav>
@@ -1127,30 +1130,36 @@
       "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
     ];
     let currentTrack = 0;
-    let audioStarted = false;
 
-    function playTrack(index) {
+    function toggleMusic() {
       const audio = document.getElementById('bg-music');
-      audio.src = playlist[index];
-      audio.play().then(() => {
-        audioStarted = true;
-      }).catch(err => {
-        console.log("Autoplay blocked. Awaiting user interaction.", err);
-      });
+      const btn = document.getElementById('music-toggle-btn');
+      if (!audio.src) {
+        audio.src = playlist[currentTrack];
+      }
+      
+      if (audio.paused) {
+        audio.play().then(() => {
+          btn.innerText = '🔇 Mute Music';
+        }).catch(err => {
+          console.log("Audio play blocked by browser. Click to interact.", err);
+        });
+      } else {
+        audio.pause();
+        btn.innerText = '🎵 Play Music';
+      }
     }
 
     // Move to next track when finished
     document.getElementById('bg-music').addEventListener('ended', () => {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle-btn');
       currentTrack = (currentTrack + 1) % playlist.length;
-      playTrack(currentTrack);
+      audio.src = playlist[currentTrack];
+      audio.play().then(() => {
+        btn.innerText = '🔇 Mute Music';
+      });
     });
-
-    // Start playing on the first click on the document
-    document.addEventListener('click', () => {
-      if (!audioStarted) {
-        playTrack(currentTrack);
-      }
-    }, { once: false });
 
     // Demo tabs
     document.querySelectorAll('.demo-tab').forEach(tab => {
