@@ -1210,7 +1210,7 @@
       const btn = document.getElementById('music-toggle-btn');
       const isMobile = window.innerWidth <= 768;
 
-      if (audio.currentTime === 0) {
+      if (audio.currentTime < startTime) {
         audio.currentTime = startTime;
       }
       
@@ -1244,7 +1244,7 @@
       const isMobile = window.innerWidth <= 768;
       
       if (audio.paused) {
-        if (audio.currentTime === 0) {
+        if (audio.currentTime < startTime) {
           audio.currentTime = startTime;
         }
         audio.play().then(() => {
