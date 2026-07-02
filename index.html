@@ -1419,6 +1419,13 @@
         showExitIntentPopup();
       }
     });
+    
+    // Additional desktop trigger when mouse focus leaves window completely
+    document.addEventListener('mouseout', (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        showExitIntentPopup();
+      }
+    });
 
     // Mobile: Detect history pop (back button click override)
     if (window.history && window.history.pushState) {
@@ -1428,16 +1435,20 @@
       });
     }
 
-    // Mobile Fallback: Trigger popup on scrolling up quickly or after reaching 70% height
-    let maxScroll = 0;
+    // Mobile Fallback 1: Trigger popup after reaching 70% height
     window.addEventListener('scroll', () => {
       const depth = window.scrollY + window.innerHeight;
       const height = document.documentElement.scrollHeight;
       const pct = (depth / height) * 100;
       if (pct > 70 && !popupShown) {
-        setTimeout(showExitIntentPopup, 1000); // 1s delay
+        setTimeout(showExitIntentPopup, 500);
       }
     });
+
+    // Mobile Fallback 2: General timer trigger if user stays on the page for 25 seconds
+    setTimeout(() => {
+      showExitIntentPopup();
+    }, 25000);
   </script>
 </body>
 </html>
