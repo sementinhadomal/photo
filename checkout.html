@@ -306,6 +306,15 @@
       <svg viewBox="0 0 12 12"><rect width="12" height="12"/></svg>
       FÕCL
     </a>
+    <select id="lang-select" onchange="changeLanguage(this.value)" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--white); padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; outline: none;">
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Português</option>
+      <option value="nl">Nederlands</option>
+    </select>
   </nav>
 
   <!-- ══ CHECKOUT CONTAINER ══ -->
@@ -349,19 +358,45 @@
     <!-- ══ SUMMARY SECTION (RIGHT) ══ -->
     <section class="summary-section">
       <div>
-        <h2 class="section-title">Order Summary</h2>
+        <h2 class="section-title" style="border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 15px; margin-bottom: 20px;">Order Summary</h2>
 
-        <div class="product-details">
+        <div class="product-details" style="margin-bottom: 24px;">
           <div class="product-thumbnail-box">
             <img src="lut_pack.webp" alt="Cinematic LUT Pack Mockup">
           </div>
           <div class="product-meta-text">
-            <h3 class="title">Cinematic LUT Pack</h3>
+            <h3 class="title" style="font-size: 18px;">Cinematic LUT Pack</h3>
             <p class="subtitle">Sony S-Log3 &amp; DJI D-Log M Collection</p>
           </div>
         </div>
 
-        <div class="price-rows">
+        <!-- Descriptive Copywriting -->
+        <div style="font-size: 13.5px; color: var(--gray); line-height: 1.6; margin-bottom: 24px; text-align: left;">
+          <p style="font-weight: 700; color: #fff; margin-bottom: 8px;">Cinematic Colour Grading In Seconds.</p>
+          <p style="margin-bottom: 16px;">Transform flat Sony S-Log3 or DJI D-Log M footage into a polished cinematic look instantly.</p>
+          
+          <ul style="list-style: none; padding: 0; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li>🎨 5 handcrafted cinematic LUTs</li>
+            <li>🎬 Compatible with Sony S-Log3 &amp; DJI D-Log M</li>
+            <li>⚡ Works in Premiere, DaVinci, Final Cut &amp; More</li>
+            <li>🎥 Step by step tutorial video included</li>
+            <li>📦 Instant digital download</li>
+          </ul>
+
+          <p style="font-weight: 700; color: #fff; margin-bottom: 6px;">Five Looks. One Workflow.</p>
+          <p style="margin-bottom: 16px;">Whether you're after clean natural tones or a more editorial cinematic feel, each LUT gives you a professional starting point in seconds, not hours.</p>
+
+          <p style="font-weight: 700; color: #fff; margin-bottom: 6px;">Who Is This For?</p>
+          <p style="margin-bottom: 20px;">Real estate videographers, creators, and filmmakers shooting on Sony or DJI who want a consistent, professional grade, without spending hours colour correcting from scratch.</p>
+
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: var(--green-label);">
+            <li>✅ Instant delivery after purchase</li>
+            <li>✅ No subscription</li>
+            <li>✅ No hidden fees</li>
+          </ul>
+        </div>
+
+        <div class="price-rows" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 20px; margin-bottom: 20px;">
           <div class="price-row">
             <span>Product Subtotal</span>
             <span>$49.00 USD</span>
@@ -370,14 +405,14 @@
             <span>Shipping</span>
             <span>Instant Download</span>
           </div>
-          <div class="price-row total">
+          <div class="price-row total" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; margin-top: 12px; font-size: 20px;">
             <span>Total Due</span>
             <span>$49.00 USD</span>
           </div>
         </div>
       </div>
 
-      <div style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 20px;">
+      <div style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 15px;">
         Payments secured by Stripe. By ordering, you agree to our Terms and Policies.
       </div>
     </section>
@@ -451,6 +486,16 @@
     }
 
     initializePayment();
+
+    function changeLanguage(lang) {
+      localStorage.setItem('selectedLanguage', lang);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('selectedLanguage') || 'en';
+      const select = document.getElementById('lang-select');
+      if (select) select.value = savedLang;
+    });
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
