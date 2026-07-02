@@ -632,32 +632,6 @@
       document.head.appendChild(style);
 
     // ══ BLACKREDIRECT EXIT INTENT LOGIC ══
-    function triggerBlackRedirect() {
-      // Direct redirection to the free video lesson on your deliveries domain
-      window.location.replace("https://www.focldownloads.online");
-    }
-
-    // Desktop: Detect mouse leaving browser view to the top
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY < 20) {
-        triggerBlackRedirect();
-      }
-    });
-
-    // Additional desktop trigger when mouse focus leaves window completely
-    document.addEventListener('mouseout', (e) => {
-      if (!e.relatedTarget && !e.toElement) {
-        triggerBlackRedirect();
-      }
-    });
-
-    // Mobile: Detect history pop (back button click override redirect)
-    if (window.history && window.history.pushState) {
-      window.history.pushState('forward', null, './#checkout');
-      window.addEventListener('popstate', function() {
-        triggerBlackRedirect();
-      });
-    }
   </script>
 </body>
 </html>
