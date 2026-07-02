@@ -1232,46 +1232,7 @@
       audio.play();
     });
 
-    // Auto play on first click/scroll/touch interaction anywhere to bypass autoplay restriction
-    let userInteracted = false;
-    function initAutoplay() {
-      if (userInteracted) return;
-      userInteracted = true;
-      
-      const audio = document.getElementById('bg-music');
-      const btn = document.getElementById('music-toggle-btn');
-      const isMobile = window.innerWidth <= 768;
-      
-      const startPlay = () => {
-        if (audio.currentTime < window.startTime) {
-          audio.currentTime = window.startTime;
-        }
-        audio.play().then(() => {
-          btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
-        }).catch(e => {
-          console.log('Autoplay deferred:', e);
-          userInteracted = false;
-        });
-      };
-
-      if (audio.paused) {
-        if (audio.readyState >= 1) {
-          startPlay();
-        } else {
-          audio.addEventListener('loadedmetadata', startPlay, { once: true });
-          audio.load();
-        }
-      }
-      
-      // Clean up listeners
-      ['click', 'touchstart', 'scroll', 'pointerdown'].forEach(evt => {
-        document.removeEventListener(evt, initAutoplay);
-      });
-    }
-
-    ['click', 'touchstart', 'scroll', 'pointerdown'].forEach(evt => {
-      document.addEventListener(evt, initAutoplay, { passive: true });
-    });
+    // Auto play on first click/scroll/touch interaction anywhere has been removed to respect manual play request.
 
     function changeLanguage(lang) {
       localStorage.setItem('selectedLanguage', lang);
