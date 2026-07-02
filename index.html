@@ -1210,7 +1210,7 @@
       const btn = document.getElementById('music-toggle-btn');
       const isMobile = window.innerWidth <= 768;
 
-      if (!audio.src || audio.src.indexOf(encodeURIComponent(musicSrc)) === -1) {
+      if (!audio.src || audio.src === "" || !audio.src.includes("GONE%20GONE")) {
         audio.src = musicSrc;
         audio.currentTime = startTime;
       }
@@ -1234,28 +1234,40 @@
       audio.play();
     });
 
-    // Auto play on first click/scroll interaction anywhere
+    // Auto play on first click/scroll/touch interaction anywhere to bypass autoplay restriction
     let userInteracted = false;
-    document.addEventListener('click', () => {
-      if (!userInteracted) {
-        userInteracted = true;
-        const audio = document.getElementById('bg-music');
-        const btn = document.getElementById('music-toggle-btn');
-        const isMobile = window.innerWidth <= 768;
-        if (audio.paused) {
-          audio.src = musicSrc;
-          audio.currentTime = startTime;
-          audio.play().then(() => {
-            btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
-          }).catch(e => console.log('Autoplay deferred:', e));
-        }
+    function initAutoplay() {
+      if (userInteracted) return;
+      userInteracted = true;
+      
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle-btn');
+      const isMobile = window.innerWidth <= 768;
+      
+      if (audio.paused) {
+        audio.src = musicSrc;
+        audio.currentTime = startTime;
+        audio.play().then(() => {
+          btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
+        }).catch(e => {
+          console.log('Autoplay deferred:', e);
+          userInteracted = false; // allow retry on next interaction
+        });
       }
-    }, { once: true });
+      
+      // Clean up listeners
+      ['click', 'touchstart', 'scroll', 'pointerdown'].forEach(evt => {
+        document.removeEventListener(evt, initAutoplay);
+      });
+    }
+
+    ['click', 'touchstart', 'scroll', 'pointerdown'].forEach(evt => {
+      document.addEventListener(evt, initAutoplay, { passive: true });
+    });
 
     function changeLanguage(lang) {
       localStorage.setItem('selectedLanguage', lang);
       const urlParams = new URLSearchParams(window.location.search);
-      // If we need to sync with other page or trigger changes later:
     }
 
     document.addEventListener('DOMContentLoaded', () => {
