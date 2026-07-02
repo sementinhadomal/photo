@@ -26,6 +26,9 @@ module.exports = async (req, res) => {
       amount: amount || 4900,
       currency: currency || 'usd',
       receipt_email: email,
+      automatic_payment_methods: {
+        enabled: true
+      },
       metadata: {
         customer_name: name || '',
         utm_source: utmParams?.utm_source || '',
