@@ -1210,7 +1210,7 @@
       const btn = document.getElementById('music-toggle-btn');
       const isMobile = window.innerWidth <= 768;
 
-      const playAudio = () => {
+      if (audio.paused) {
         if (audio.currentTime < startTime) {
           audio.currentTime = startTime;
         }
@@ -1219,15 +1219,6 @@
         }).catch(err => {
           console.log("Audio play blocked by browser. Click to interact.", err);
         });
-      };
-
-      if (audio.paused) {
-        if (audio.readyState >= 1) {
-          playAudio();
-        } else {
-          audio.addEventListener('loadedmetadata', playAudio, { once: true });
-          audio.load();
-        }
       } else {
         audio.pause();
         btn.innerText = isMobile ? '🎵' : '🎵 Play Music';
