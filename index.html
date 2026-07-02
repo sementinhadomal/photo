@@ -886,7 +886,7 @@
         <option value="nl">Nederlands</option>
       </select>
       <button id="music-toggle-btn" onclick="toggleMusic()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-size: 11px; padding: 6px 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;">🎵 Play Music</button>
-      <audio id="bg-music" style="display:none;"></audio>
+      <audio id="bg-music" src="GONE GONE , THANK YOU.mp3" preload="auto" style="display:none;"></audio>
     </div>
     <span class="nav-center"><b>$49.90 USD</b> &nbsp;One-time</span>
     <a href="#buy" class="nav-cta">Get The Pack</a>
@@ -1210,8 +1210,7 @@
       const btn = document.getElementById('music-toggle-btn');
       const isMobile = window.innerWidth <= 768;
 
-      if (!audio.src || audio.src === "" || !audio.src.includes("GONE%20GONE")) {
-        audio.src = musicSrc;
+      if (audio.currentTime === 0) {
         audio.currentTime = startTime;
       }
       
@@ -1245,8 +1244,9 @@
       const isMobile = window.innerWidth <= 768;
       
       if (audio.paused) {
-        audio.src = musicSrc;
-        audio.currentTime = startTime;
+        if (audio.currentTime === 0) {
+          audio.currentTime = startTime;
+        }
         audio.play().then(() => {
           btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
         }).catch(e => {
