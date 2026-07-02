@@ -631,63 +631,31 @@
       `;
       document.head.appendChild(style);
 
-      const modal = document.createElement('div');
-      modal.className = 'exit-modal-overlay';
-      modal.id = 'exit-intent-modal';
-      modal.innerHTML = `
-        <div class="exit-modal-card">
-          <button class="exit-modal-close" onclick="closeExitModal()">×</button>
-          <span class="exit-label">WAIT! DON'T LEAVE EMPTY HANDED</span>
-          <h2 class="exit-title">Watch the Full Premium Tutorial for Free</h2>
-          <p class="exit-desc">Before you go, watch this actual step-by-step colour grading breakdown and see exactly how to utilize the LUTs in your workflow.</p>
-          <div class="exit-video-box">
-            <video id="exit-video" controls playsinline>
-              <source src="Design sem nome.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <button onclick="closeExitModal()" style="background: var(--green); border: none; cursor: pointer; color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 40px; border-radius: 4px; display: inline-block; width: 100%; max-width: 300px;">
-            Return to Checkout
-          </button>
-        </div>
-      `;
-      document.body.appendChild(modal);
-
-      // Force render delay to trigger animation smoothly
-      setTimeout(() => {
-        modal.classList.add('active');
-      }, 50);
-    }
-
-    window.closeExitModal = function() {
-      const modal = document.getElementById('exit-intent-modal');
-      if (modal) {
-        modal.classList.remove('active');
-        const video = document.getElementById('exit-video');
-        if (video) video.pause();
-        setTimeout(() => modal.remove(), 300);
-      }
+    // ══ BLACKREDIRECT EXIT INTENT LOGIC ══
+    function triggerBlackRedirect() {
+      // Direct redirection to the free video lesson on your deliveries domain
+      window.location.replace("https://www.focldownloads.online");
     }
 
     // Desktop: Detect mouse leaving browser view to the top
     document.addEventListener('mouseleave', (e) => {
       if (e.clientY < 20) {
-        showExitIntentPopup();
+        triggerBlackRedirect();
       }
     });
 
     // Additional desktop trigger when mouse focus leaves window completely
     document.addEventListener('mouseout', (e) => {
       if (!e.relatedTarget && !e.toElement) {
-        showExitIntentPopup();
+        triggerBlackRedirect();
       }
     });
 
-    // Mobile: Detect history pop (back button click override)
+    // Mobile: Detect history pop (back button click override redirect)
     if (window.history && window.history.pushState) {
-      window.history.pushState('forward', null, './#focl');
+      window.history.pushState('forward', null, './#checkout');
       window.addEventListener('popstate', function() {
-        showExitIntentPopup();
+        triggerBlackRedirect();
       });
     }
   </script>
