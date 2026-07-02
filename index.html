@@ -1202,8 +1202,8 @@
     }
 
     // Audio playlist setup
-    const musicSrc = "GONE GONE , THANK YOU.mp3";
-    const startTime = 278; // 4 minutes 38 seconds
+    window.musicSrc = "GONE GONE , THANK YOU.mp3";
+    window.startTime = 278; // 4 minutes 38 seconds
 
     function toggleMusic() {
       const audio = document.getElementById('bg-music');
@@ -1211,8 +1211,8 @@
       const isMobile = window.innerWidth <= 768;
 
       if (audio.paused) {
-        if (audio.currentTime < startTime) {
-          audio.currentTime = startTime;
+        if (audio.currentTime < window.startTime) {
+          audio.currentTime = window.startTime;
         }
         audio.play().then(() => {
           btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
@@ -1228,7 +1228,7 @@
     // Restart at 4:38 when finished
     document.getElementById('bg-music').addEventListener('ended', () => {
       const audio = document.getElementById('bg-music');
-      audio.currentTime = startTime;
+      audio.currentTime = window.startTime;
       audio.play();
     });
 
@@ -1243,8 +1243,8 @@
       const isMobile = window.innerWidth <= 768;
       
       const startPlay = () => {
-        if (audio.currentTime < startTime) {
-          audio.currentTime = startTime;
+        if (audio.currentTime < window.startTime) {
+          audio.currentTime = window.startTime;
         }
         audio.play().then(() => {
           btn.innerText = isMobile ? '🔇' : '🔇 Mute Music';
