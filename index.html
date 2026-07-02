@@ -1278,6 +1278,166 @@
         tab.classList.add('active');
       });
     });
+
+    // ══ EXIT INTENT POPUP LOGIC ══
+    let popupShown = false;
+
+    function showExitIntentPopup() {
+      if (popupShown) return;
+      popupShown = true;
+      localStorage.setItem('exit_popup_shown', 'true');
+      
+      // Inject Modal CSS and HTML dynamically
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .exit-modal-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,0.85);
+          backdrop-filter: blur(10px);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          pointer-events: none;
+          padding: 20px;
+        }
+        .exit-modal-overlay.active {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .exit-modal-card {
+          background: #111;
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 12px;
+          max-width: 600px;
+          width: 100%;
+          padding: 30px;
+          position: relative;
+          transform: translateY(30px);
+          transition: transform 0.3s ease;
+          text-align: center;
+        }
+        .exit-modal-overlay.active .exit-modal-card {
+          transform: translateY(0);
+        }
+        .exit-modal-close {
+          position: absolute;
+          top: 15px; right: 15px;
+          background: transparent;
+          border: none;
+          color: rgba(255,255,255,0.4);
+          font-size: 24px;
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+        .exit-modal-close:hover { color: #fff; }
+        .exit-label {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          color: #ffcc00;
+          text-transform: uppercase;
+          margin-bottom: 12px;
+          display: block;
+        }
+        .exit-title {
+          font-family: 'Barlow Condensed', sans-serif;
+          font-size: 28px;
+          font-weight: 800;
+          text-transform: uppercase;
+          margin-bottom: 8px;
+          line-height: 1.1;
+          color: #fff;
+        }
+        .exit-desc {
+          font-size: 14px;
+          color: rgba(255,255,255,0.6);
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+        .exit-video-box {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16/9;
+          border-radius: 8px;
+          overflow: hidden;
+          background: #000;
+          border: 1px solid rgba(255,255,255,0.06);
+          margin-bottom: 24px;
+        }
+        .exit-video-box video {
+          width: 100%; height: 100%; object-fit: cover;
+        }
+      `;
+      document.head.appendChild(style);
+
+      const modal = document.createElement('div');
+      modal.className = 'exit-modal-overlay';
+      modal.id = 'exit-intent-modal';
+      modal.innerHTML = `
+        <div class="exit-modal-card">
+          <button class="exit-modal-close" onclick="closeExitModal()">×</button>
+          <span class="exit-label">WAIT! DON'T LEAVE EMPTY HANDED</span>
+          <h2 class="exit-title">Watch the Full Premium Tutorial for Free</h2>
+          <p class="exit-desc">Before you go, watch this actual step-by-step colour grading breakdown and see exactly how to utilize the LUTs in your workflow.</p>
+          <div class="exit-video-box">
+            <video id="exit-video" controls playsinline>
+              <source src="https://www.focldownloads.online/Design%20sem%20nome.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <a href="checkout.html" class="nav-cta" onclick="location.href='checkout.html' + window.location.search; return false;" style="background: var(--green); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 40px; text-decoration: none; border-radius: 4px; display: inline-block;">
+            Get The LUT Pack Now
+          </a>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Force render delay to trigger animation smoothly
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 50);
+    }
+
+    window.closeExitModal = function() {
+      const modal = document.getElementById('exit-intent-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        const video = document.getElementById('exit-video');
+        if (video) video.pause();
+        setTimeout(() => modal.remove(), 300);
+      }
+    }
+
+    // Desktop: Detect mouse leaving browser view to the top
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY < 20) {
+        showExitIntentPopup();
+      }
+    });
+
+    // Mobile: Detect history pop (back button click override)
+    if (window.history && window.history.pushState) {
+      window.history.pushState('forward', null, './#focl');
+      window.addEventListener('popstate', function() {
+        showExitIntentPopup();
+      });
+    }
+
+    // Mobile Fallback: Trigger popup on scrolling up quickly or after reaching 70% height
+    let maxScroll = 0;
+    window.addEventListener('scroll', () => {
+      const depth = window.scrollY + window.innerHeight;
+      const height = document.documentElement.scrollHeight;
+      const pct = (depth / height) * 100;
+      if (pct > 70 && !popupShown) {
+        setTimeout(showExitIntentPopup, 1000); // 1s delay
+      }
+    });
   </script>
 </body>
 </html>
